@@ -2,27 +2,26 @@ package system_information
 
 import (
 	"errors"
-	"os/exec"
+	"servermanager/cmd"
 	"strconv"
 	"strings"
 )
 
+type Memory struct {
+	Unit  string
+	Total int
+	Used  int
+	Free  int
+}
+
 func GetMemory() (Memory, error) {
-	var cmd = exec.Command("free", "-m")
-	var cmdOutput, cmdError = cmd.Output()
+	lines, cmdError := cmd.GetCommandResultByLines(true, "free", "-m")
 
 	if cmdError != nil {
-		return Memory{}, errors.New("command execution error")
+		return Memory{}, cmdError
 	}
 
-	trimmedCmdOutput := strings.ReplaceAll(string(cmdOutput), "\r\n", "\n")
-	lines := strings.Split(trimmedCmdOutput, "\n")
-
-	for lineIndex, line := range lines {
-		if lineIndex == 0 {
-			continue
-		}
-
+	for _, line := range lines {
 		lineData := strings.Fields(line)
 
 		if len(lineData) < 4 || lineData[0] != "Mem:" {

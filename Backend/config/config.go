@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+type Config struct {
+	Drives []string
+}
+
 func (conf *Config) Load() error {
 	filePath, err := os.Getwd()
 

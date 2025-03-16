@@ -1,34 +1,33 @@
 package system_information
 
 import (
-	"errors"
-	"os/exec"
+	"servermanager/cmd"
 	"servermanager/config"
 	"slices"
 	"strconv"
 	"strings"
 )
 
+type Drive struct {
+	Name       string
+	Unit       string
+	TotalSpace int
+	UsedSpace  int
+	FreeSpace  int
+}
+
 func GetDrives(conf config.Config) ([]Drive, error) {
 	var drives []Drive
 
 	cmdParameters := slices.Concat([]string{"-B", "GB"}, conf.Drives)
 
-	var cmd = exec.Command("df", cmdParameters...)
-	var cmdOutput, cmdError = cmd.Output()
+	lines, cmdError := cmd.GetCommandResultByLines(true, "df", cmdParameters...)
 
 	if cmdError != nil {
-		return nil, errors.New("command execution error")
+		return nil, cmdError
 	}
 
-	trimmedCmdOutput := strings.ReplaceAll(string(cmdOutput), "\r\n", "\n")
-	lines := strings.Split(trimmedCmdOutput, "\n")
-
-	for lineIndex, line := range lines {
-		if lineIndex == 0 {
-			continue
-		}
-
+	for _, line := range lines {
 		lineData := strings.Fields(line)
 
 		if len(lineData) < 4 {
