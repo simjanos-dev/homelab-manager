@@ -1,8 +1,8 @@
 package system_information
 
 import (
-	"servermanager/cmd"
-	"servermanager/config"
+	"homelabmanager/cmd"
+	"homelabmanager/config"
 	"slices"
 	"strconv"
 	"strings"

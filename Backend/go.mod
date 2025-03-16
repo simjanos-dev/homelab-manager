@@ -1,3 +1,3 @@
-module servermanager
+module homelabmanager
 
 go 1.24.1

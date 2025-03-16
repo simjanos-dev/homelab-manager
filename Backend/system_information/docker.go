@@ -1,7 +1,7 @@
 package system_information
 
 import (
-	"servermanager/cmd"
+	"homelabmanager/cmd"
 	"strings"
 )
 

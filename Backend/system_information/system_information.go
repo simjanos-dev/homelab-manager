@@ -1,12 +1,11 @@
 package system_information
 
-import "servermanager/config"
+import "homelabmanager/config"
 
 type SystemInformation struct {
-	Uptime           string
-	Memory           Memory
-	Drives           []Drive
-	DockerContainers []DockerComposeFile
+	Uptime string
+	Memory Memory
+	Drives []Drive
 }
 
 func GetSystemInformation(conf config.Config) (SystemInformation, error) {
@@ -14,7 +13,6 @@ func GetSystemInformation(conf config.Config) (SystemInformation, error) {
 	systemInformation.Drives, _ = GetDrives(conf)
 	systemInformation.Uptime, _ = GetUptime()
 	systemInformation.Memory, _ = GetMemory()
-	systemInformation.DockerContainers, _ = GetDockerComposeFiles()
 
 	return systemInformation, nil
 }

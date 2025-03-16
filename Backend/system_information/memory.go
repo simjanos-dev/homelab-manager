@@ -2,7 +2,7 @@ package system_information
 
 import (
 	"errors"
-	"servermanager/cmd"
+	"homelabmanager/cmd"
 	"strconv"
 	"strings"
 )
